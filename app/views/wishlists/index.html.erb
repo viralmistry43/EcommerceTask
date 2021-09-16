@@ -1,0 +1,94 @@
+<section class="full-width-wrapper bcmp-pgntn-section bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="sideheading_with_underline">
+          <div class="row">
+            <div class="col-lg-9 col-md-9 col-xs-12 col-sm-push-3 col-sm-9 col-xs-12">
+              <div class="row">
+                <ol class="breadcrumb ds-breadcrumb pull-right">
+                  <li><a href="<%= products_path %>">Home</a></li>
+                  <li class="active">Wishlist</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-pull-9 col-sm-3 col-xs-12">
+              <h2 class="side_heading">
+                <span class="review-title">My Wishlist <span class="product-num">(<%= @wishlists.count %> Items)</span></span>
+              </h2>
+            </div>
+          </div>
+          <div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper bg-light-pink wishlist">
+  <div class="container">
+     <div class="row">
+       <div class="fullwidth-wrapperborder">
+         <div class="fullwidth-wrapperfullcart clearfix">
+           <div class="fullwidth-wrapperlist clearfix">
+             <div class="col-md-5 col-sm-4 col-xs-12">
+               <div class="product hidden-xs">
+                 <h5>PRODUCT</h5>
+               </div>
+             </div>
+             <div class="col-md-3 col-sm-3 col-xs-12">
+               <div class="product hidden-xs">
+                 <h5>PRICE</h5>
+               </div>
+             </div>
+             <div class="col-md-4 col-sm-5 col-xs-12">
+               <div class="product hidden-xs">
+                 <h5>ADDED DATE</h5>
+               </div>
+               <div class="cart-options pull-right">
+               </div>
+             </div>
+           </div>
+           <% @wishlists.each do |wishlist| %>
+             <div class="fullwidth-wrapperlist clearfix">
+               <div class="col-md-5 col-sm-4 col-xs-12">
+                 <div class="product-img">
+                   <%= image_tag "products.png", class: "img-responsive product-list" %>
+                 </div>
+                 <div class="product-details">
+                   <h5 class="product-name"><%= wishlist.product.name %></h5>
+                   <h5 class="merchant-name"><%= wishlist.product.brand.name %></h5>
+                 </div>
+               </div>
+               <div class="col-md-3 col-sm-3 col-xs-12">
+                 <div class="product-price">
+                   <h5><%= wishlist.product.mrp %></h5>
+                 </div>
+               </div>
+               <div class="col-md-4 col-sm-5 col-xs-12">
+                 <div class="product-price">
+                   <h5><%= wishlist.product.created_at.strftime('%d/%m/%Y %I:%M:%S %p') %></h5>
+                 </div>
+                 <div class="cart-options pull-right">
+                   <a href="<%= add_to_cart_path(id: wishlist.product.id) %>" class="button btn btn-default"> MOVE TO CART </a>
+                   <a href="<%= remove_to_wishlist_path(id: wishlist.id) %>" class="button btn btn-default"> <i class="fa fa-trash-o"></i> </a>
+                 </div>
+               </div>
+             </div>
+           <% end %>
+         </div>
+       </div>
+     </div>
+  </div>
+</section>
+
+<% content_for :js_code do %>
+  <script type="text/javascript">
+    $(function(){
+      $('.material').materialForm();
+    });
+    $('#user-rating-form').on('change','[name="rating"]',function(){
+      $('#selected-rating').text($('[name="rating"]:checked').val());
+    });
+  </script>
+<% end %>

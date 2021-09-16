@@ -1,0 +1,13 @@
+//= require jquery
+//= require bootstrap.min
+//= require bootstrap-select.min
+//= require slick.min
+//= require viewportchecker
+//= require bootstrap-rating.min
+//= require jquery.missofis-countdown
+//= require bootstrap-slider.min
+//= require jquery.material.form
+//= require jquery.bxslider
+//= require jquery.elevatezoom
+//= require custom-plugin
+//= require scripts

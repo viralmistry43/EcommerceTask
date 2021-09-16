@@ -1,0 +1,71 @@
+<section class="full-width-wrapper bcmp-pgntn-section bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="sideheading_with_underline">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-xs-12 col-sm-push-4 col-sm-8 col-xs-12">
+              <div class="row">
+                <ol class="breadcrumb ds-breadcrumb pull-right">
+                  <li><a href="#">Home</a></li>
+                  <li class="active">Products</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-pull-8 col-sm-4 col-xs-12">
+              <h2 class="side_heading">
+                <span>All Product List</span>
+              </h2>
+            </div>
+          </div>
+          <div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper bg-light-pink merchant-list">
+  <div class="container">
+    <div class="row material_form_wrapper">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <%= form_tag products_path, method: :get do |f| %>
+          <div class="form-group pull-right">
+            <label for="search">Search</label>
+            <input type="text" name="search" value="<%= @search %>">
+          </div>
+        <% end %>
+      </div>
+      <% @products.each_slice(2).each do |products| %>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 merchant-wrapper">
+          <% products.each do |product| %>
+            <div class="col-md-6 col-sm-6 col-xs-12 pl0">
+              <div class="merchant-list-details">
+                <div class="col-md-5 col-sm-12 col-xs-12 logo_container">
+                  <div class="merch-logo">
+                    <%= image_tag "Logo_Footer.png" %>
+                  </div>
+                </div>
+                <div class="col-md-7 col-sm-12 col-xs-12 merchant_container">
+                  <div class="merch-detail">
+                    <h5><%= product.name %></h5>
+                    <div class="contacts">
+                      <p><%= product.brand.name %></p>
+                    </div>
+                    <div class="contacts">
+                      <p><%= product.sort_description %></p>
+                    </div>
+                    <div class="contacts">
+                      <p><b><%= product.mrp %></b></p>
+                    </div>
+                    <a href="<%= product_path(product) %>" class="more-info">More Info</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,664 @@
+<section class="full-width-wrapper bcmp-pgntn-section bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="sideheading_with_underline">
+          <div class="row">
+            <div class="col-lg-9 col-md-9 col-xs-12 col-sm-push-3 col-sm-9 col-xs-12">
+              <div class="row">
+                <ol class="breadcrumb ds-breadcrumb pull-right">
+                  <li><a href="#">Home</a></li>
+                  <li><a href="<%= products_path %>">Products</a></li>
+                  <li class="active"><%= @product.name %></li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-pull-9 col-sm-3 col-xs-12">
+              <h2 class="side_heading">
+                <span><%= @product.name %></span>
+              </h2>
+            </div>
+          </div>
+          <div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper best-selling-product product_preview bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 productDesc pl0">
+        <h5>Descriptions</h5>
+        <p><%= @product.sort_description %></p>
+        <div>
+          <a href="javascript:void" class="btn ripple btn-upper readmore-btn" tabindex="0">Read More</a>
+        </div>
+      </div>
+
+      <div class="col-lg-6 productGallery p0 text-center">
+        <div class="mobileview">
+          <%= image_tag "large2.jpg", class: "img-responsive", id: "img" %>
+			  </div>
+        <div class="zoom-left">
+          <%= image_tag "large2.jpg", class: "zoom", id: "img_01", data: { "zoom-image": asset_url("large2.jpg") } %>
+			  </div>
+			  <div id="gal1" class="ext">
+  				<ul class="bxslider">
+  				 	<li>
+  						<a  href="" class="elevatezoom-gallery" data-update="" data-image="<%= asset_url("large2.jpg") %>" data-zoom-image="<%= asset_url("large2.jpg") %>">
+                <%= image_tag "large2.jpg", id: "img_01", width: "100", height: "75" %>
+  						</a>
+  					</li>
+  					<li>
+  						<a  href="" class="elevatezoom-gallery" data-update="" data-image="<%= asset_url("large1.jpg") %>" data-zoom-image="<%= asset_url("large1.jpg") %>">
+                <%= image_tag "large1.jpg", id: "img_01", width: "100", height: "75" %>
+  						</a>
+  					</li>
+  					<li>
+  						<a  href="" class="elevatezoom-gallery" data-update="" data-image="<%= asset_url("large5.jpg") %>" data-zoom-image="<%= asset_url("large5.jpg") %>">
+                <%= image_tag "large5.jpg", id: "img_01", width: "100", height: "75" %>
+  						</a>
+  					</li>
+            <li>
+  						<a  href="" class="elevatezoom-gallery" data-update="" data-image="<%= asset_url("large2.jpg") %>" data-zoom-image="<%= asset_url("large2.jpg") %>">
+                <%= image_tag "large2.jpg", id: "img_01", width: "100", height: "75" %>
+  						</a>
+  					</li>
+  				</ul>
+          <nav class='controls'>
+            <a href='#' id='PREV' class='bxPrev'></a>
+            <a href='#' id='NEXT' class='bxNext'></a>
+          </nav>
+			  </div>
+        <% content_for :js_code do %>
+          <script type="text/javascript">
+            if($(window).width() <= 767){
+              $(".zoom-left #img_01").css({"min-width":"150px","max-width":"200px!important", "max-height":"200px!important"});
+            }else{
+              $(".zoom-left #img_01").css({"min-width":"350px","max-width":"400px!important", "max-height":"400px!important"});
+            }
+         </script>
+        <% end %>
+      </div>
+      <div class="col-lg-3 productTitle pl0">
+        <h4><%= @product.name %></h4>
+        <p><span class="footer-text">Sold By</span> <b><%= @product.brand.name %></b></p>
+        <div class="main_flex">
+          <div>
+            <span>Rs</span>
+            <h2><%= @product.mrp %></h2>
+          </div>
+        </div>
+        <div class="quantity clearfix">
+          <input type="number" class='form-control count' value="1" min="1"/>
+        </div>
+        <div class="clearfix mb-3">
+          <% @product.product_variants.each do |product_variant| %>
+            <h5><%= product_variant.name %></h5>
+            <% product_variant.variant_options.each do |variant_option| %>
+              <div class="form-check form-check-inline">
+                <% if product_variant.variant_type == 'code' %>
+                  <input class="form-check-input" type="radio" id="variant_option_<%= variant_option.id %>" value="<%= variant_option.name %>" name="product_color">
+                <% else %>
+                  <input class="form-check-input" type="radio" id="variant_option_<%= variant_option.id %>" value="<%= variant_option.name %>" name="product_size">
+                <% end %>
+                <label class="form-check-label" for="variant_option_<%= variant_option.id %>">
+                  <% if product_variant.variant_type == 'code' %>
+                    <span style="background-color: <%= variant_option.name %>"> &nbsp; &nbsp; &nbsp; </span>
+                  <% else %>
+                    <%= variant_option.name %>
+                  <% end %>
+                </label>
+              </div>
+            <% end %>
+            <hr>
+          <% end %>
+        </div>
+        <div>
+          <a href="<%= add_to_cart_path(id: @product.id) %>" class="btn ripple btn-upper addtocart-btn" tabindex="0">Add To Cart</a>
+          <a href="<%= add_to_wishlist_path(id: @product.id) %>" class="btn ripple btn-upper like-btn" tabindex="0"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+        </div>
+        <hr/>
+        <div class="product-rating">
+          <input type="hidden" class="rating" data-readonly value="3.5"/>
+          <p><span>5,811</span> Ratings &amp; <span>989</span> Reviews</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper best-selling-product product_description bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="header-alone">
+          <h1 class="section_side_heading">
+            <span class="prod-heading">Products Description</span>
+          </h1>
+          <div class="h_line"><div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div></div>
+        </div>
+        <p><%= @product.sort_description %></p>
+        <ul>
+          <% @product.long_description.split(',').each do |des| %>
+            <li><%= des %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="review_section">
+          <div class="review_coloumn">
+            <h4><label class="label label-success"><span>5 </span><i class="fa fa-star"></i></label> <span class="header-text">Excelent Product</span></h4>
+            <p>Full marks for transparency. It's exactly as it looks. Classy and elegant. Of course you have to handle it very carefully, because it's really delicate. I can't say if it would maintain it's beauty after a considerable time, but I feel it's worth the price.</p>
+            <p class="footer-text">Certified Buyer 17 Aug,2017</p>
+          </div>
+          <div class="review_coloumn">
+            <h4><label class="label label-success"><span>5 </span><i class="fa fa-star"></i></label> <span class="header-text">Excelent Product</span></h4>
+            <p>Full marks for transparency. It's exactly as it looks. Classy and elegant. Of course you have to handle it very carefully, because it's really delicate. I can't say if it would maintain it's beauty after a considerable time, but I feel it's worth the price.</p>
+            <p class="footer-text">Certified Buyer 17 Aug,2017</p>
+          </div>
+          <div class="review_coloumn">
+            <h4><label class="label label-warning"><span>1 </span><i class="fa fa-star"></i></label> <span class="header-text">Very Bad Product</span></h4>
+            <p>Does not deserve a single star also but can't give less than this. Got a broken one and returned the same day..Moreover quality was not as per description.</p>
+            <p class="footer-text">Certified Buyer 17 Aug,2017</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="full-width-wrapper best-selling-product bg-light-pink">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="header-alone">
+          <h1 class="section_side_heading">
+            <span class="prod-heading">Related Products</span>
+          </h1>
+          <div class="h_line"><div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mobile-products-view visible-xs">
+        <div class="col-xs-12">
+            <div class="row">
+            </div>
+            <div class="clearfix product-list">
+              <div class="product_item">
+                <a href="#" class="quickview-slider-items mobile-layout">
+                  <div class="inner-content">
+                    <div class="content">
+                      <label class="percentage">35% off</label>
+                      <%= image_tag "pendant1.jpg", class: "img-responsive" %>
+                      <div class="bottom-content">
+                        <span class="ends_in" init="3600"></span>
+                        <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                        <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                          <div class="btn-group text-left" role="group">
+                            <div class="price">
+                              <div><span class="offer-price">QR 350</span></div>
+                              <div><del>QR 799</del></div>
+                            </div>
+                          </div>
+                          <div class="btn-group text-center" role="group">
+                            <input type="hidden" class="rating" data-readonly value="1"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="product_item">
+                <a href="#" class="quickview-slider-items mobile-layout">
+                  <div class="inner-content">
+                    <div class="content">
+                      <label class="percentage">35% off</label>
+                      <%= image_tag "pendant2.jpg", class: "img-responsive" %>
+                      <div class="bottom-content">
+                        <span class="ends_in" init="3600"></span>
+                        <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                        <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                          <div class="btn-group text-left" role="group">
+                            <div class="price">
+                              <div><span class="offer-price">QR 350</span></div>
+                              <div><del>QR 799</del></div>
+                            </div>
+                          </div>
+                          <div class="btn-group text-center" role="group">
+                            <input type="hidden" class="rating" data-readonly value="1"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="product_item">
+                <a href="#" class="quickview-slider-items mobile-layout">
+                  <div class="inner-content">
+                    <div class="content">
+                      <label class="percentage">35% off</label>
+                      <%= image_tag "pendant3.jpg", class: "img-responsive" %>
+                      <div class="bottom-content">
+                        <span class="ends_in" init="3600"></span>
+                        <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                        <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                          <div class="btn-group text-left" role="group">
+                            <div class="price">
+                              <div><span class="offer-price">QR 350</span></div>
+                              <div><del>QR 799</del></div>
+                            </div>
+                          </div>
+                          <div class="btn-group text-center" role="group">
+                            <input type="hidden" class="rating" data-readonly value="1"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="product_item">
+                <a href="#" class="quickview-slider-items mobile-layout">
+                  <div class="inner-content">
+                    <div class="content">
+                      <label class="percentage">35% off</label>
+                      <%= image_tag "pendant4.jpg", class: "img-responsive" %>
+                      <div class="bottom-content">
+                        <span class="ends_in" init="3600"></span>
+                        <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                        <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                          <div class="btn-group text-left" role="group">
+                            <div class="price">
+                              <div><span class="offer-price">QR 350</span></div>
+                              <div><del>QR 799</del></div>
+                            </div>
+                          </div>
+                          <div class="btn-group text-center" role="group">
+                            <input type="hidden" class="rating" data-readonly value="1"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-10 hidden-xs">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 full_width_at_459px col-10">
+        <div class="related_slider ds-slider-dots  slider-items-wrapper">
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant1.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="1"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                  <div class="hover-content">
+                      <div class="top_pendulam">
+                          <div class="top_pendulam-wrapper">
+                              <div class="top_pendulam-line"></div>
+                          </div>
+                      </div>
+                      <div class="action-btns">
+                          <a href="#" class="add-to-wishlist ripple"></a>
+                          <a href="#" class="add-to-cart ripple"></a>
+                          <a href="#" class="share ripple"></a>
+                      </div>
+                      <a href="#" class="btn view-btn ripple">View Details</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant2.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="2"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                <div class="hover-content">
+                  <div class="top_pendulam">
+                    <div class="top_pendulam-wrapper">
+                      <div class="top_pendulam-line"></div>
+                    </div>
+                  </div>
+                  <div class="action-btns">
+                    <a href="#" class="add-to-wishlist ripple"></a>
+                    <a href="#" class="add-to-cart ripple"></a>
+                    <a href="#" class="share ripple"></a>
+                  </div>
+                  <a href="#" class="btn view-btn ripple">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant3.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="2.5"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                <div class="hover-content">
+                  <div class="top_pendulam">
+                    <div class="top_pendulam-wrapper">
+                      <div class="top_pendulam-line"></div>
+                    </div>
+                  </div>
+                  <div class="action-btns">
+                    <a href="#" class="add-to-wishlist ripple"></a>
+                    <a href="#" class="add-to-cart ripple"></a>
+                    <a href="#" class="share ripple"></a>
+                  </div>
+                  <a href="#" class="btn view-btn ripple">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant4.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="2"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                <div class="hover-content">
+                  <div class="top_pendulam">
+                    <div class="top_pendulam-wrapper">
+                      <div class="top_pendulam-line"></div>
+                    </div>
+                  </div>
+                  <div class="action-btns">
+                    <a href="#" class="add-to-wishlist ripple"></a>
+                    <a href="#" class="add-to-cart ripple"></a>
+                    <a href="#" class="share ripple"></a>
+                  </div>
+                  <a href="#" class="btn view-btn ripple">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant3.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="2.5"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                <div class="hover-content">
+                  <div class="top_pendulam">
+                    <div class="top_pendulam-wrapper">
+                      <div class="top_pendulam-line"></div>
+                    </div>
+                  </div>
+                  <div class="action-btns">
+                    <a href="#" class="add-to-wishlist ripple"></a>
+                    <a href="#" class="add-to-cart ripple"></a>
+                    <a href="#" class="share ripple"></a>
+                  </div>
+                  <a href="#" class="btn view-btn ripple">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="quickview-slider-items">
+              <div class="inner-content">
+                <div class="content">
+                  <%= image_tag "pendant4.jpg", class: "img-responsive" %>
+                  <div class="bottom-content">
+                    <h4 class="product-name">MG & 70 Beurer Infrared Massager</h4>
+                    <div class="btn-group btn-group-justified product-reviews" role="group" aria-label="...">
+                      <div class="btn-group text-left" role="group">
+                        <div class="price">
+                          <div><span class="offer-price">QR 350</span></div>
+                          <div><del>QR 799</del></div>
+                        </div>
+                      </div>
+                      <div class="btn-group text-center" role="group">
+                        <input type="hidden" class="rating" data-readonly value="2"/>
+                      </div>
+                      <div class="btn-group text-right" role="group">
+                        <label class="percentage">35% off</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-content-hover">
+                <div class="hover-content">
+                  <div class="top_pendulam">
+                    <div class="top_pendulam-wrapper">
+                      <div class="top_pendulam-line"></div>
+                    </div>
+                  </div>
+                  <div class="action-btns">
+                    <a href="#" class="add-to-wishlist ripple"></a>
+                    <a href="#" class="add-to-cart ripple"></a>
+                    <a href="#" class="share ripple"></a>
+                  </div>
+                  <a href="#" class="btn view-btn ripple">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header sideheading_with_underline">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="side_heading">
+          <span>Forgot Password</span>
+        </h2>
+        <div class="row visible-md visible-lg">
+          <div class="col-lg-12">
+            <div class="ds-default-line-wrapper"><div class="ds-default-line"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="text-signin">Please enter the email address you signed up with and we'll send you a password reset link</p>
+        <div class="">
+          <form action="" id="materialpopup" class="material">
+            <input type="email" name="email" placeholder="Email<span class='important'></span>" required>
+            <button type="submit" class="btn ripple resetbtn" tabindex="0">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_code do %>
+  <script type="text/javascript">
+    $(function(){
+      jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up"><i class="fa fa-angle-up" aria-hidden="true"></i></div><div class="quantity-button quantity-down"><i class="fa fa-angle-down" aria-hidden="true"></i></div></div>').insertAfter('.quantity input');
+      jQuery('.quantity').each(function() {
+        var spinner = jQuery(this),
+        input = spinner.find('input[type="number"]'),
+        btnUp = spinner.find('.quantity-up'),
+        btnDown = spinner.find('.quantity-down'),
+        min = input.attr('min'),
+        max = input.attr('max');
+        btnUp.click(function() {
+          var oldValue = parseFloat(input.val());
+          if (oldValue >= max) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue + 1;
+          }
+          spinner.find("input").val(newVal);
+          spinner.find("input").trigger("change");
+        });
+
+        btnDown.click(function() {
+          var oldValue = parseFloat(input.val());
+          if (oldValue <= min) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue - 1;
+          }
+          spinner.find("input").val(newVal);
+          spinner.find("input").trigger("change");
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('.readmore-btn').click(function(){
+        $('.product_description').show();
+        $('html, body').animate({
+          scrollTop: $(".product_description").offset().top
+        }, 2000);
+      });
+      $('.product-rating').click(function(){
+        $('.review_section').show();
+        $('html, body').animate({
+          scrollTop: $(".review_section").offset().top
+        }, 2000);
+      });
+  		$('.bxslider').bxSlider({
+  			mode: 'horizontal',
+  			moveSlides: 1,
+        responsive:false,
+  			slideMargin: 30,
+  			infiniteLoop: true,
+  			slideWidth: 100,
+  			minSlides: 4,
+  			maxSlides: 3,
+  			controls:true,
+        nextSelector: '.ext .bxNext',
+        prevSelector: '.ext .bxPrev',
+        nextText: '<i class="fa fa-angle-right fa-3x"></i>',
+        prevText: '<i class="fa fa-angle-left fa-3x"></i>',
+        pager: false
+  		});
+	   });
+    $(document).on('click','.elevatezoom-gallery',function(e){
+      e.preventDefault();
+      var dataZoomImg = $(this).attr('data-zoom-image');
+      var dataImg = $(this).attr('data-image');
+      var mainImg = $('#img_01');
+      mainImg.attr('src',dataImg);
+      var mobImg = $('#img');
+      mobImg.attr('src',dataImg);
+      mainImg.data('zoom-image',dataZoomImg).elevateZoom({responsive:'True',zoomType:'inner'});
+    });
+    $("#img_01").elevateZoom({gallery:'gallery_01',responsive:'True',zoomType:'inner', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'});
+  </script>
+<% end %>

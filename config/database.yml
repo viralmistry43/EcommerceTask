@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: ecommerce_task
+  username: postgres
+  # password: root
+  host: localhost
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: ecommerce_task_test
+
+production:
+  <<: *default
