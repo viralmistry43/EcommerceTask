@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   resources :wishlists, only: :index
   get 'wishlists/add-to-wishlist/:id', to: 'wishlists#add_to_wishlist', as: :add_to_wishlist
   get 'wishlists/remove-to-wishlist/:id', to: 'wishlists#remove_to_wishlist', as: :remove_to_wishlist
+
+  root to: 'products#index'
 end
